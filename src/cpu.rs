@@ -40,14 +40,14 @@ impl CPU {
             Instruction::Instruction8 { opcode, operands } => {
                 match opcode {
                     0x00 => todo!(),
-                    0x01 => todo!(),
+                    0x01 => self.ld_bc_d16(operands),
                     0x02 => self.ld_bc_a(operands),
                     0x03 => todo!(),
                     0x04 => todo!(),
                     0x05 => todo!(),
                     0x06 => self.ld_b_d8(operands),
                     0x07 => todo!(),
-                    0x08 => todo!(),
+                    0x08 => self.ld_a16_sp(operands),
                     0x09 => todo!(),
                     0x0a => self.ld_a_bc(operands),
                     0x0b => todo!(),
@@ -56,7 +56,7 @@ impl CPU {
                     0x0e => self.ld_c_d8(operands),
                     0x0f => todo!(),
                     0x10 => todo!(),
-                    0x11 => todo!(),
+                    0x11 => self.ld_de_d16(operands),
                     0x12 => self.ld_de_a(operands),
                     0x13 => todo!(),
                     0x14 => todo!(),
@@ -72,7 +72,7 @@ impl CPU {
                     0x1e => self.ld_e_d8(operands),
                     0x1f => todo!(),
                     0x20 => todo!(),
-                    0x21 => todo!(),
+                    0x21 => self.ld_hl_d16(operands),
                     0x22 => self.ld_hl_plus_a(operands),
                     0x23 => todo!(),
                     0x24 => todo!(),
@@ -88,7 +88,7 @@ impl CPU {
                     0x2e => self.ld_l_d8(operands),
                     0x2f => todo!(),
                     0x30 => todo!(),
-                    0x31 => todo!(),
+                    0x31 => self.ld_sp_d16(operands),
                     0x32 => self.ld_hl_minus_a(operands),
                     0x33 => todo!(),
                     0x34 => todo!(),
@@ -232,11 +232,11 @@ impl CPU {
                     0xbe => todo!(),
                     0xbf => todo!(),
                     0xc0 => todo!(),
-                    0xc1 => todo!(),
+                    0xc1 => self.pop_bc(operands),
                     0xc2 => todo!(),
                     0xc3 => todo!(),
                     0xc4 => todo!(),
-                    0xc5 => todo!(),
+                    0xc5 => self.push_bc(operands),
                     0xc6 => todo!(),
                     0xc7 => todo!(),
                     0xc8 => todo!(),
@@ -248,11 +248,11 @@ impl CPU {
                     0xce => todo!(),
                     0xcf => todo!(),
                     0xd0 => todo!(),
-                    0xd1 => todo!(),
+                    0xd1 => self.pop_de(operands),
                     0xd2 => todo!(),
                     0xd3 => todo!(),
                     0xd4 => todo!(),
-                    0xd5 => todo!(),
+                    0xd5 => self.push_de(operands),
                     0xd6 => todo!(),
                     0xd7 => todo!(),
                     0xd8 => todo!(),
@@ -264,11 +264,11 @@ impl CPU {
                     0xde => todo!(),
                     0xdf => todo!(),
                     0xe0 => self.ldh_a8_a(operands),
-                    0xe1 => todo!(),
+                    0xe1 => self.pop_hl(operands),
                     0xe2 => self.ldh_c_a(operands),
                     0xe3 => todo!(),
                     0xe4 => todo!(),
-                    0xe5 => todo!(),
+                    0xe5 => self.push_hl(operands),
                     0xe6 => todo!(),
                     0xe7 => todo!(),
                     0xe8 => todo!(),
@@ -280,15 +280,15 @@ impl CPU {
                     0xee => todo!(),
                     0xef => todo!(),
                     0xf0 => self.ldh_a_a8(operands),
-                    0xf1 => todo!(),
+                    0xf1 => self.pop_af(operands),
                     0xf2 => self.ldh_a_c(operands),
                     0xf3 => todo!(),
                     0xf4 => todo!(),
-                    0xf5 => todo!(),
+                    0xf5 => self.push_af(operands),
                     0xf6 => todo!(),
                     0xf7 => todo!(),
-                    0xf8 => todo!(),
-                    0xf9 => todo!(),
+                    0xf8 => self.ld_hl_sp_plus_s8(operands),
+                    0xf9 => self.ld_sp_hl(operands),
                     0xfa => self.ld_a_a16(operands),
                     0xfb => todo!(),
                     0xfc => todo!(),
@@ -308,6 +308,10 @@ impl CPU {
 
     fn a(&self) -> u8 {
         self.a
+    }
+
+    fn f(&self) -> u8 {
+        self.f
     }
 
     fn b(&self) -> u8 {
@@ -346,8 +350,59 @@ impl CPU {
         u16::from_be_bytes([self.h, self.l])
     }
 
+    fn sp(&self) -> u16 {
+        self.sp
+    }
+
     fn set_a(&mut self, val: u8) {
         self.a = val;
+    }
+
+    fn set_f(&mut self, val: u8) {
+        self.f = val;
+    }
+
+    fn set_z_flag(&mut self, val: bool) {
+        match val {
+            true => self.set_f(self.f() | 0x80),
+            false => self.set_f(self.f() & 0x7f),
+        };
+    }
+
+    fn set_n_flag(&mut self, val: bool) {
+        match val {
+            true => self.set_f(self.f() | 0x40),
+            false => self.set_f(self.f() & 0xbf),
+        };
+    }
+
+    fn set_h_flag(&mut self, val: bool) {
+        match val {
+            true => self.set_f(self.f() | 0x20),
+            false => self.set_f(self.f() & 0xdf),
+        };
+    }
+
+    fn update_h_flag(&mut self, operand1: u8, operand2: u8) {
+        if (((operand1 & 0xf) + (operand2 & 0xf)) & 0x10) == 0x10 {
+            self.set_h_flag(true);
+        } else {
+            self.set_h_flag(false);
+        }
+    }
+
+    fn set_c_flag(&mut self, val: bool) {
+        match val {
+            true => self.set_f(self.f() | 0x10),
+            false => self.set_f(self.f() & 0xef),
+        };
+    }
+
+    fn update_c_flag(&mut self, operand1: u8, operand2: u8) {
+        match operand1.checked_add(operand2) {
+            Some(_) => self.set_c_flag(false),
+            None => self.set_c_flag(true),
+        };
     }
 
     fn set_b(&mut self, val: u8) {
@@ -372,6 +427,10 @@ impl CPU {
 
     fn set_l(&mut self, val: u8) {
         self.l = val;
+    }
+
+    fn set_sp(&mut self, val: u16) {
+        self.sp = val;
     }
 
     fn ld_b_b(&mut self, operands: Vec<u8>) {
@@ -969,6 +1028,145 @@ impl CPU {
         let new_hl = u16::to_be_bytes(new_hl);
         self.set_h(new_hl[0]);
         self.set_l(new_hl[1]);
+    }
+
+    fn ld_bc_d16(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 3;
+
+        self.set_c(operands[0]);
+        self.set_b(operands[1]);
+    }
+
+    fn ld_de_d16(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 3;
+
+        self.set_e(operands[0]);
+        self.set_d(operands[1]);
+    }
+
+    fn ld_hl_d16(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 3;
+
+        self.set_l(operands[0]);
+        self.set_h(operands[1]);
+    }
+
+    fn ld_sp_d16(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 3;
+
+        self.set_sp(u16::from_le_bytes([operands[0], operands[1]]));
+    }
+
+    fn ld_a16_sp(&mut self, operands: Vec<u8>) {
+        self.time += 5;
+        self.pc += 3;
+
+        let bytes = u16::to_be_bytes(self.sp());
+        let s = bytes[0];
+        let p = bytes[1];
+        self.ram.store(u16::from_le_bytes([operands[0], operands[1]]), p);
+        self.ram.store(u16::from_le_bytes([operands[0], operands[1]]) + 1, s);
+    }
+
+    fn ld_sp_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_sp(self.hl());
+    }
+
+    fn push_bc(&mut self, operands: Vec<u8>) {
+        self.time += 4;
+        self.pc += 1;
+
+        self.ram.store(self.sp() - 1, self.b());
+        self.ram.store(self.sp() - 2, self.c());
+        self.set_sp(self.sp() - 2);
+    }
+
+    fn push_de(&mut self, operands: Vec<u8>) {
+        self.time += 4;
+        self.pc += 1;
+
+        self.ram.store(self.sp() - 1, self.d());
+        self.ram.store(self.sp() - 2, self.e());
+        self.set_sp(self.sp() - 2);
+    }
+
+    fn push_hl(&mut self, operands: Vec<u8>) {
+        self.time += 4;
+        self.pc += 1;
+
+        self.ram.store(self.sp() - 1, self.h());
+        self.ram.store(self.sp() - 2, self.l());
+        self.set_sp(self.sp() - 2);
+    }
+
+    fn push_af(&mut self, operands: Vec<u8>) {
+        self.time += 4;
+        self.pc += 1;
+
+        self.ram.store(self.sp() - 1, self.a());
+        self.ram.store(self.sp() - 2, self.f());
+        self.set_sp(self.sp() - 2);
+    }
+
+    fn pop_bc(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.set_c(self.ram.load(self.sp()));
+        self.set_b(self.ram.load(self.sp() + 1));
+        self.set_sp(self.sp() + 2);
+    }
+
+    fn pop_de(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.set_e(self.ram.load(self.sp()));
+        self.set_d(self.ram.load(self.sp() + 1));
+        self.set_sp(self.sp() + 2);
+    }
+
+    fn pop_hl(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.set_l(self.ram.load(self.sp()));
+        self.set_h(self.ram.load(self.sp() + 1));
+        self.set_sp(self.sp() + 2);
+    }
+
+    fn pop_af(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.set_f(self.ram.load(self.sp()));
+        self.set_a(self.ram.load(self.sp() + 1));
+        self.set_sp(self.sp() + 2);
+    }
+
+    fn ld_hl_sp_plus_s8(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 2;
+
+        let sp_offset = operands[0] as i8;
+        let sp_offset = sp_offset as i16;
+        let new_sp = (self.sp() as i16 + sp_offset) as u16;
+        let bytes = u16::to_be_bytes(new_sp);
+        self.set_h(bytes[0]);
+        self.set_l(bytes[1]);
+
+        self.set_z_flag(false);
+        self.set_n_flag(false);
+        let sp_low = u16::to_be_bytes(self.sp())[1];
+        self.update_h_flag(sp_low, operands[0]);
+        self.update_c_flag(sp_low, operands[0]);
     }
 }
 

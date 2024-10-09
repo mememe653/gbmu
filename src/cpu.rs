@@ -42,15 +42,15 @@ impl CPU {
                     0x00 => todo!(),
                     0x01 => self.ld_bc_d16(operands),
                     0x02 => self.ld_bc_a(operands),
-                    0x03 => todo!(),
+                    0x03 => self.inc_bc(operands),
                     0x04 => self.inc_b(operands),
                     0x05 => self.dec_b(operands),
                     0x06 => self.ld_b_d8(operands),
                     0x07 => todo!(),
                     0x08 => self.ld_a16_sp(operands),
-                    0x09 => todo!(),
+                    0x09 => self.add_hl_bc(operands),
                     0x0a => self.ld_a_bc(operands),
-                    0x0b => todo!(),
+                    0x0b => self.dec_bc(operands),
                     0x0c => self.inc_c(operands),
                     0x0d => self.dec_c(operands),
                     0x0e => self.ld_c_d8(operands),
@@ -58,15 +58,15 @@ impl CPU {
                     0x10 => todo!(),
                     0x11 => self.ld_de_d16(operands),
                     0x12 => self.ld_de_a(operands),
-                    0x13 => todo!(),
+                    0x13 => self.inc_de(operands),
                     0x14 => self.inc_d(operands),
                     0x15 => self.dec_d(operands),
                     0x16 => self.ld_d_d8(operands),
                     0x17 => todo!(),
                     0x18 => todo!(),
-                    0x19 => todo!(),
+                    0x19 => self.add_hl_de(operands),
                     0x1a => self.ld_a_de(operands),
-                    0x1b => todo!(),
+                    0x1b => self.dec_de(operands),
                     0x1c => self.inc_e(operands),
                     0x1d => self.dec_e(operands),
                     0x1e => self.ld_e_d8(operands),
@@ -74,15 +74,15 @@ impl CPU {
                     0x20 => todo!(),
                     0x21 => self.ld_hl_d16(operands),
                     0x22 => self.ld_hl_plus_a(operands),
-                    0x23 => todo!(),
+                    0x23 => self.inc_hl_reg(operands),
                     0x24 => self.inc_h(operands),
                     0x25 => self.dec_h(operands),
                     0x26 => self.ld_h_d8(operands),
                     0x27 => todo!(),
                     0x28 => todo!(),
-                    0x29 => todo!(),
+                    0x29 => self.add_hl_hl(operands),
                     0x2a => self.ld_a_hl_plus(operands),
-                    0x2b => todo!(),
+                    0x2b => self.dec_hl_reg(operands),
                     0x2c => self.inc_l(operands),
                     0x2d => self.dec_l(operands),
                     0x2e => self.ld_l_d8(operands),
@@ -90,15 +90,15 @@ impl CPU {
                     0x30 => todo!(),
                     0x31 => self.ld_sp_d16(operands),
                     0x32 => self.ld_hl_minus_a(operands),
-                    0x33 => todo!(),
+                    0x33 => self.inc_sp(operands),
                     0x34 => self.inc_hl(operands),
                     0x35 => self.dec_hl(operands),
                     0x36 => self.ld_hl_d8(operands),
                     0x37 => self.scf(operands),
                     0x38 => todo!(),
-                    0x39 => todo!(),
+                    0x39 => self.add_hl_sp(operands),
                     0x3a => self.ld_a_hl_minus(operands),
-                    0x3b => todo!(),
+                    0x3b => self.dec_sp(operands),
                     0x3c => self.inc_a(operands),
                     0x3d => self.dec_a(operands),
                     0x3e => self.ld_a_d8(operands),
@@ -271,7 +271,7 @@ impl CPU {
                     0xe5 => self.push_hl(operands),
                     0xe6 => self.and_d8(operands),
                     0xe7 => todo!(),
-                    0xe8 => todo!(),
+                    0xe8 => self.add_sp_s8(operands),
                     0xe9 => todo!(),
                     0xea => self.ld_a16_a(operands),
                     0xeb => todo!(),
@@ -407,6 +407,14 @@ impl CPU {
         }
     }
 
+    fn update_h_flag_16_bit(&mut self, operand1: u16, operand2: u16) {
+        if (((operand1 & 0xfff) + (operand2 & 0xfff)) & 0x1000) == 0x1000 {
+            self.set_h_flag(true);
+        } else {
+            self.set_h_flag(false);
+        }
+    }
+
     fn set_c_flag(&mut self, val: bool) {
         match val {
             true => self.set_f(self.f() | 0x10),
@@ -431,12 +439,25 @@ impl CPU {
         };
     }
 
+    fn update_c_flag_16_bit(&mut self, operand1: u16, operand2: u16) {
+        match operand1.checked_add(operand2) {
+            Some(_) => self.set_c_flag(false),
+            None => self.set_c_flag(true),
+        };
+    }
+
     fn set_b(&mut self, val: u8) {
         self.b = val;
     }
 
     fn set_c(&mut self, val: u8) {
         self.c = val;
+    }
+
+    fn set_bc(&mut self, val: u16) {
+        let bc = u16::to_be_bytes(val);
+        self.b = bc[0];
+        self.c = bc[1];
     }
 
     fn set_d(&mut self, val: u8) {
@@ -447,12 +468,24 @@ impl CPU {
         self.e = val;
     }
 
+    fn set_de(&mut self, val: u16) {
+        let de = u16::to_be_bytes(val);
+        self.d = de[0];
+        self.e = de[1];
+    }
+
     fn set_h(&mut self, val: u8) {
         self.h = val;
     }
 
     fn set_l(&mut self, val: u8) {
         self.l = val;
+    }
+
+    fn set_hl(&mut self, val: u16) {
+        let hl = u16::to_be_bytes(val);
+        self.h = hl[0];
+        self.l = hl[1];
     }
 
     fn set_sp(&mut self, val: u16) {
@@ -2669,6 +2702,125 @@ impl CPU {
 
         self.set_n_flag(true);
         self.set_h_flag(true);
+    }
+
+    fn inc_bc(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_bc(self.bc().wrapping_add(1));
+    }
+
+    fn inc_de(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_de(self.de().wrapping_add(1));
+    }
+
+    fn inc_hl_reg(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_hl(self.hl().wrapping_add(1));
+    }
+
+    fn inc_sp(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_sp(self.sp().wrapping_add(1));
+    }
+
+    fn dec_bc(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_bc(self.bc().wrapping_sub(1));
+    }
+
+    fn dec_de(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_de(self.de().wrapping_sub(1));
+    }
+
+    fn dec_hl_reg(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_hl(self.hl().wrapping_sub(1));
+    }
+
+    fn dec_sp(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_sp(self.sp().wrapping_sub(1));
+    }
+
+    fn add_hl_bc(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag_16_bit(self.hl(), self.bc());
+        self.update_c_flag_16_bit(self.hl(), self.bc());
+
+        self.set_hl(self.hl() + self.bc());
+
+        self.set_n_flag(false);
+    }
+
+    fn add_hl_de(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag_16_bit(self.hl(), self.de());
+        self.update_c_flag_16_bit(self.hl(), self.de());
+
+        self.set_hl(self.hl() + self.de());
+
+        self.set_n_flag(false);
+    }
+
+    fn add_hl_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag_16_bit(self.hl(), self.hl());
+        self.update_c_flag_16_bit(self.hl(), self.hl());
+
+        self.set_hl(self.hl() + self.hl());
+
+        self.set_n_flag(false);
+    }
+
+    fn add_hl_sp(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag_16_bit(self.hl(), self.sp());
+        self.update_c_flag_16_bit(self.hl(), self.sp());
+
+        self.set_hl(self.hl() + self.sp());
+
+        self.set_n_flag(false);
+    }
+
+    fn add_sp_s8(&mut self, operands: Vec<u8>) {
+        self.time += 4;
+        self.pc += 2;
+
+        let sp = u16::to_be_bytes(self.sp());
+        self.update_h_flag(sp[1], operands[0]);
+        self.update_c_flag(sp[1], operands[0]);
+
+        let s8: i8 = operands[0] as i8;
+        self.set_sp(((self.sp() as i16).wrapping_add(s8 as i16)) as u16);
+
+        self.set_z_flag(false);
+        self.set_n_flag(false);
     }
 }
 

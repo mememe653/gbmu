@@ -43,66 +43,66 @@ impl CPU {
                     0x01 => self.ld_bc_d16(operands),
                     0x02 => self.ld_bc_a(operands),
                     0x03 => todo!(),
-                    0x04 => todo!(),
-                    0x05 => todo!(),
+                    0x04 => self.inc_b(operands),
+                    0x05 => self.dec_b(operands),
                     0x06 => self.ld_b_d8(operands),
                     0x07 => todo!(),
                     0x08 => self.ld_a16_sp(operands),
                     0x09 => todo!(),
                     0x0a => self.ld_a_bc(operands),
                     0x0b => todo!(),
-                    0x0c => todo!(),
-                    0x0d => todo!(),
+                    0x0c => self.inc_c(operands),
+                    0x0d => self.dec_c(operands),
                     0x0e => self.ld_c_d8(operands),
                     0x0f => todo!(),
                     0x10 => todo!(),
                     0x11 => self.ld_de_d16(operands),
                     0x12 => self.ld_de_a(operands),
                     0x13 => todo!(),
-                    0x14 => todo!(),
-                    0x15 => todo!(),
+                    0x14 => self.inc_d(operands),
+                    0x15 => self.dec_d(operands),
                     0x16 => self.ld_d_d8(operands),
                     0x17 => todo!(),
                     0x18 => todo!(),
                     0x19 => todo!(),
                     0x1a => self.ld_a_de(operands),
                     0x1b => todo!(),
-                    0x1c => todo!(),
-                    0x1d => todo!(),
+                    0x1c => self.inc_e(operands),
+                    0x1d => self.dec_e(operands),
                     0x1e => self.ld_e_d8(operands),
                     0x1f => todo!(),
                     0x20 => todo!(),
                     0x21 => self.ld_hl_d16(operands),
                     0x22 => self.ld_hl_plus_a(operands),
                     0x23 => todo!(),
-                    0x24 => todo!(),
-                    0x25 => todo!(),
+                    0x24 => self.inc_h(operands),
+                    0x25 => self.dec_h(operands),
                     0x26 => self.ld_h_d8(operands),
                     0x27 => todo!(),
                     0x28 => todo!(),
                     0x29 => todo!(),
                     0x2a => self.ld_a_hl_plus(operands),
                     0x2b => todo!(),
-                    0x2c => todo!(),
-                    0x2d => todo!(),
+                    0x2c => self.inc_l(operands),
+                    0x2d => self.dec_l(operands),
                     0x2e => self.ld_l_d8(operands),
-                    0x2f => todo!(),
+                    0x2f => self.cpl(operands),
                     0x30 => todo!(),
                     0x31 => self.ld_sp_d16(operands),
                     0x32 => self.ld_hl_minus_a(operands),
                     0x33 => todo!(),
-                    0x34 => todo!(),
-                    0x35 => todo!(),
+                    0x34 => self.inc_hl(operands),
+                    0x35 => self.dec_hl(operands),
                     0x36 => self.ld_hl_d8(operands),
-                    0x37 => todo!(),
+                    0x37 => self.scf(operands),
                     0x38 => todo!(),
                     0x39 => todo!(),
                     0x3a => self.ld_a_hl_minus(operands),
                     0x3b => todo!(),
-                    0x3c => todo!(),
-                    0x3d => todo!(),
+                    0x3c => self.inc_a(operands),
+                    0x3d => self.dec_a(operands),
                     0x3e => self.ld_a_d8(operands),
-                    0x3f => todo!(),
+                    0x3f => self.ccf(operands),
                     0x40 => self.ld_b_b(operands),
                     0x41 => self.ld_b_c(operands),
                     0x42 => self.ld_b_d(operands),
@@ -167,77 +167,77 @@ impl CPU {
                     0x7d => self.ld_a_l(operands),
                     0x7e => self.ld_a_hl(operands),
                     0x7f => self.ld_a_a(operands),
-                    0x80 => todo!(),
-                    0x81 => todo!(),
-                    0x82 => todo!(),
-                    0x83 => todo!(),
-                    0x84 => todo!(),
-                    0x85 => todo!(),
-                    0x86 => todo!(),
-                    0x87 => todo!(),
-                    0x88 => todo!(),
-                    0x89 => todo!(),
-                    0x8a => todo!(),
-                    0x8b => todo!(),
-                    0x8c => todo!(),
-                    0x8d => todo!(),
-                    0x8e => todo!(),
-                    0x8f => todo!(),
-                    0x90 => todo!(),
-                    0x91 => todo!(),
-                    0x92 => todo!(),
-                    0x93 => todo!(),
-                    0x94 => todo!(),
-                    0x95 => todo!(),
-                    0x96 => todo!(),
-                    0x97 => todo!(),
-                    0x98 => todo!(),
-                    0x99 => todo!(),
-                    0x9a => todo!(),
-                    0x9b => todo!(),
-                    0x9c => todo!(),
-                    0x9d => todo!(),
-                    0x9e => todo!(),
-                    0x9f => todo!(),
-                    0xa0 => todo!(),
-                    0xa1 => todo!(),
-                    0xa2 => todo!(),
-                    0xa3 => todo!(),
-                    0xa4 => todo!(),
-                    0xa5 => todo!(),
-                    0xa6 => todo!(),
-                    0xa7 => todo!(),
-                    0xa8 => todo!(),
-                    0xa9 => todo!(),
-                    0xaa => todo!(),
-                    0xab => todo!(),
-                    0xac => todo!(),
-                    0xad => todo!(),
-                    0xae => todo!(),
-                    0xaf => todo!(),
-                    0xb0 => todo!(),
-                    0xb1 => todo!(),
-                    0xb2 => todo!(),
-                    0xb3 => todo!(),
-                    0xb4 => todo!(),
-                    0xb5 => todo!(),
-                    0xb6 => todo!(),
-                    0xb7 => todo!(),
-                    0xb8 => todo!(),
-                    0xb9 => todo!(),
-                    0xba => todo!(),
-                    0xbb => todo!(),
-                    0xbc => todo!(),
-                    0xbd => todo!(),
-                    0xbe => todo!(),
-                    0xbf => todo!(),
+                    0x80 => self.add_a_b(operands),
+                    0x81 => self.add_a_c(operands),
+                    0x82 => self.add_a_d(operands),
+                    0x83 => self.add_a_e(operands),
+                    0x84 => self.add_a_h(operands),
+                    0x85 => self.add_a_l(operands),
+                    0x86 => self.add_a_hl(operands),
+                    0x87 => self.add_a_a(operands),
+                    0x88 => self.adc_a_b(operands),
+                    0x89 => self.adc_a_c(operands),
+                    0x8a => self.adc_a_d(operands),
+                    0x8b => self.adc_a_e(operands),
+                    0x8c => self.adc_a_h(operands),
+                    0x8d => self.adc_a_l(operands),
+                    0x8e => self.adc_a_hl(operands),
+                    0x8f => self.adc_a_a(operands),
+                    0x90 => self.sub_b(operands),
+                    0x91 => self.sub_c(operands),
+                    0x92 => self.sub_d(operands),
+                    0x93 => self.sub_e(operands),
+                    0x94 => self.sub_h(operands),
+                    0x95 => self.sub_l(operands),
+                    0x96 => self.sub_hl(operands),
+                    0x97 => self.sub_a(operands),
+                    0x98 => self.sbc_a_b(operands),
+                    0x99 => self.sbc_a_c(operands),
+                    0x9a => self.sbc_a_d(operands),
+                    0x9b => self.sbc_a_e(operands),
+                    0x9c => self.sbc_a_h(operands),
+                    0x9d => self.sbc_a_l(operands),
+                    0x9e => self.sbc_a_hl(operands),
+                    0x9f => self.sbc_a_a(operands),
+                    0xa0 => self.and_b(operands),
+                    0xa1 => self.and_c(operands),
+                    0xa2 => self.and_d(operands),
+                    0xa3 => self.and_e(operands),
+                    0xa4 => self.and_h(operands),
+                    0xa5 => self.and_l(operands),
+                    0xa6 => self.and_hl(operands),
+                    0xa7 => self.and_a(operands),
+                    0xa8 => self.xor_b(operands),
+                    0xa9 => self.xor_c(operands),
+                    0xaa => self.xor_d(operands),
+                    0xab => self.xor_e(operands),
+                    0xac => self.xor_h(operands),
+                    0xad => self.xor_l(operands),
+                    0xae => self.xor_hl(operands),
+                    0xaf => self.xor_a(operands),
+                    0xb0 => self.or_b(operands),
+                    0xb1 => self.or_c(operands),
+                    0xb2 => self.or_d(operands),
+                    0xb3 => self.or_e(operands),
+                    0xb4 => self.or_h(operands),
+                    0xb5 => self.or_l(operands),
+                    0xb6 => self.or_hl(operands),
+                    0xb7 => self.or_a(operands),
+                    0xb8 => self.cp_b(operands),
+                    0xb9 => self.cp_c(operands),
+                    0xba => self.cp_d(operands),
+                    0xbb => self.cp_e(operands),
+                    0xbc => self.cp_h(operands),
+                    0xbd => self.cp_l(operands),
+                    0xbe => self.cp_hl(operands),
+                    0xbf => self.cp_a(operands),
                     0xc0 => todo!(),
                     0xc1 => self.pop_bc(operands),
                     0xc2 => todo!(),
                     0xc3 => todo!(),
                     0xc4 => todo!(),
                     0xc5 => self.push_bc(operands),
-                    0xc6 => todo!(),
+                    0xc6 => self.add_a_d8(operands),
                     0xc7 => todo!(),
                     0xc8 => todo!(),
                     0xc9 => todo!(),
@@ -245,7 +245,7 @@ impl CPU {
                     0xcb => todo!(),
                     0xcc => todo!(),
                     0xcd => todo!(),
-                    0xce => todo!(),
+                    0xce => self.adc_a_d8(operands),
                     0xcf => todo!(),
                     0xd0 => todo!(),
                     0xd1 => self.pop_de(operands),
@@ -253,7 +253,7 @@ impl CPU {
                     0xd3 => todo!(),
                     0xd4 => todo!(),
                     0xd5 => self.push_de(operands),
-                    0xd6 => todo!(),
+                    0xd6 => self.sub_d8(operands),
                     0xd7 => todo!(),
                     0xd8 => todo!(),
                     0xd9 => todo!(),
@@ -261,7 +261,7 @@ impl CPU {
                     0xdb => todo!(),
                     0xdc => todo!(),
                     0xdd => todo!(),
-                    0xde => todo!(),
+                    0xde => self.sbc_a_d8(operands),
                     0xdf => todo!(),
                     0xe0 => self.ldh_a8_a(operands),
                     0xe1 => self.pop_hl(operands),
@@ -269,7 +269,7 @@ impl CPU {
                     0xe3 => todo!(),
                     0xe4 => todo!(),
                     0xe5 => self.push_hl(operands),
-                    0xe6 => todo!(),
+                    0xe6 => self.and_d8(operands),
                     0xe7 => todo!(),
                     0xe8 => todo!(),
                     0xe9 => todo!(),
@@ -277,7 +277,7 @@ impl CPU {
                     0xeb => todo!(),
                     0xec => todo!(),
                     0xed => todo!(),
-                    0xee => todo!(),
+                    0xee => self.xor_d8(operands),
                     0xef => todo!(),
                     0xf0 => self.ldh_a_a8(operands),
                     0xf1 => self.pop_af(operands),
@@ -285,7 +285,7 @@ impl CPU {
                     0xf3 => todo!(),
                     0xf4 => todo!(),
                     0xf5 => self.push_af(operands),
-                    0xf6 => todo!(),
+                    0xf6 => self.or_d8(operands),
                     0xf7 => todo!(),
                     0xf8 => self.ld_hl_sp_plus_s8(operands),
                     0xf9 => self.ld_sp_hl(operands),
@@ -293,7 +293,7 @@ impl CPU {
                     0xfb => todo!(),
                     0xfc => todo!(),
                     0xfd => todo!(),
-                    0xfe => todo!(),
+                    0xfe => self.cp_d8(operands),
                     0xff => todo!(),
                     _ => (),
                 }
@@ -312,6 +312,14 @@ impl CPU {
 
     fn f(&self) -> u8 {
         self.f
+    }
+
+    fn c_flag(&self) -> u8 {
+        if self.f() & 0x10 == 0 {
+            0
+        } else {
+            1
+        }
     }
 
     fn b(&self) -> u8 {
@@ -391,6 +399,14 @@ impl CPU {
         }
     }
 
+    fn update_h_flag_with_carry(&mut self, operand1: u8, operand2: u8, operand3: u8) {
+        if (((operand1 & 0xf) + (operand2 & 0xf) + (operand3 & 0xf)) & 0x10) == 0x10 {
+            self.set_h_flag(true);
+        } else {
+            self.set_h_flag(false);
+        }
+    }
+
     fn set_c_flag(&mut self, val: bool) {
         match val {
             true => self.set_f(self.f() | 0x10),
@@ -401,6 +417,16 @@ impl CPU {
     fn update_c_flag(&mut self, operand1: u8, operand2: u8) {
         match operand1.checked_add(operand2) {
             Some(_) => self.set_c_flag(false),
+            None => self.set_c_flag(true),
+        };
+    }
+
+    fn update_c_flag_with_carry(&mut self, operand1: u8, operand2: u8, operand3: u8) {
+        match operand1.checked_add(operand2) {
+            Some(partial_sum) => match partial_sum.checked_add(operand3) {
+                Some(_) => self.set_c_flag(false),
+                None => self.set_c_flag(true),
+            },
             None => self.set_c_flag(true),
         };
     }
@@ -1167,6 +1193,1482 @@ impl CPU {
         let sp_low = u16::to_be_bytes(self.sp())[1];
         self.update_h_flag(sp_low, operands[0]);
         self.update_c_flag(sp_low, operands[0]);
+    }
+
+    fn add_a_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.b());
+        self.update_c_flag(self.a(), self.b());
+
+        self.set_a(self.a().wrapping_add(self.b()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.c());
+        self.update_c_flag(self.a(), self.c());
+
+        self.set_a(self.a().wrapping_add(self.c()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.d());
+        self.update_c_flag(self.a(), self.d());
+
+        self.set_a(self.a().wrapping_add(self.d()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.e());
+        self.update_c_flag(self.a(), self.e());
+
+        self.set_a(self.a().wrapping_add(self.e()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.h());
+        self.update_c_flag(self.a(), self.h());
+
+        self.set_a(self.a().wrapping_add(self.h()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.l());
+        self.update_c_flag(self.a(), self.l());
+
+        self.set_a(self.a().wrapping_add(self.l()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.a());
+        self.update_c_flag(self.a(), self.a());
+
+        self.set_a(self.a().wrapping_add(self.a()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag(self.ram.load(self.hl()), self.a());
+        self.update_c_flag(self.ram.load(self.hl()), self.a());
+
+        self.set_a(self.ram.load(self.hl()).wrapping_add(self.a()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn add_a_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.update_h_flag(self.a(), operands[0]);
+        self.update_c_flag(self.a(), operands[0]);
+
+        self.set_a(self.a().wrapping_add(operands[0]));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.b(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.b(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.b()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.c(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.c(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.c()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.d(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.d(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.d()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.e(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.e(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.e()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.h(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.h(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.h()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.l(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.l(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.l()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.a(), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.a(), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.a()).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.ram.load(self.hl()), carry_in);
+        self.update_c_flag_with_carry(self.a(), self.ram.load(self.hl()), carry_in);
+
+        self.set_a(self.a().wrapping_add(self.ram.load(self.hl())).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn adc_a_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), operands[0], carry_in);
+        self.update_c_flag_with_carry(self.a(), operands[0], carry_in);
+
+        self.set_a(self.a().wrapping_add(operands[0]).wrapping_add(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn sub_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.b().wrapping_neg());
+        self.update_c_flag(self.a(), self.b().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.b()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.c().wrapping_neg());
+        self.update_c_flag(self.a(), self.c().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.c()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.d().wrapping_neg());
+        self.update_c_flag(self.a(), self.d().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.d()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.e().wrapping_neg());
+        self.update_c_flag(self.a(), self.e().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.e()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.h().wrapping_neg());
+        self.update_c_flag(self.a(), self.h().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.h()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.l().wrapping_neg());
+        self.update_c_flag(self.a(), self.l().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.l()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.a().wrapping_neg());
+        self.update_c_flag(self.a(), self.a().wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.a()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.ram.load(self.hl()).wrapping_neg());
+        self.update_c_flag(self.a(), self.ram.load(self.hl()).wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.ram.load(self.hl())));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sub_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.update_h_flag(self.a(), operands[0].wrapping_neg());
+        self.update_c_flag(self.a(), operands[0].wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(operands[0]));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.b().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.b().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.b()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.c().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.c().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.c()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.d().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.d().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.d()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.e().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.e().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.e()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.h().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.h().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.h()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.l().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.l().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.l()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.a().wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.a().wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.a()).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), self.ram.load(self.hl()).wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), self.ram.load(self.hl()).wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(self.ram.load(self.hl())).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn sbc_a_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        let carry_in = self.c_flag();
+        self.update_h_flag_with_carry(self.a(), operands[0].wrapping_neg(), carry_in.wrapping_neg());
+        self.update_c_flag_with_carry(self.a(), operands[0].wrapping_neg(), carry_in.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(operands[0]).wrapping_sub(carry_in));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.b().wrapping_neg());
+        self.update_c_flag(self.a(), self.b().wrapping_neg());
+        if self.a() == self.b() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.c().wrapping_neg());
+        self.update_c_flag(self.a(), self.c().wrapping_neg());
+        if self.a() == self.c() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.d().wrapping_neg());
+        self.update_c_flag(self.a(), self.d().wrapping_neg());
+        if self.a() == self.d() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.e().wrapping_neg());
+        self.update_c_flag(self.a(), self.e().wrapping_neg());
+        if self.a() == self.e() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.h().wrapping_neg());
+        self.update_c_flag(self.a(), self.h().wrapping_neg());
+        if self.a() == self.h() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.l().wrapping_neg());
+        self.update_c_flag(self.a(), self.l().wrapping_neg());
+        if self.a() == self.l() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.a().wrapping_neg());
+        self.update_c_flag(self.a(), self.a().wrapping_neg());
+        if self.a() == self.a() {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), self.ram.load(self.hl()).wrapping_neg());
+        self.update_c_flag(self.a(), self.ram.load(self.hl()).wrapping_neg());
+        if self.a() == self.ram.load(self.hl()) {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn cp_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.update_h_flag(self.a(), operands[0].wrapping_neg());
+        self.update_c_flag(self.a(), operands[0].wrapping_neg());
+        if self.a() == operands[0] {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn inc_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.b(), 1);
+
+        self.set_b(self.b().wrapping_add(1));
+
+        if self.b() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.c(), 1);
+
+        self.set_c(self.c().wrapping_add(1));
+
+        if self.c() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.d(), 1);
+
+        self.set_d(self.d().wrapping_add(1));
+
+        if self.d() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.e(), 1);
+
+        self.set_e(self.e().wrapping_add(1));
+
+        if self.e() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.h(), 1);
+
+        self.set_h(self.h().wrapping_add(1));
+
+        if self.h() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.l(), 1);
+
+        self.set_l(self.l().wrapping_add(1));
+
+        if self.l() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), 1);
+
+        self.set_a(self.a().wrapping_add(1));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn inc_hl(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.update_h_flag(self.ram.load(self.hl()), 1);
+
+        self.ram.store(self.hl(), self.ram.load(self.hl()).wrapping_add(1));
+
+        if self.ram.load(self.hl()) == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+    }
+
+    fn dec_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.b(), 1u8.wrapping_neg());
+
+        self.set_b(self.b().wrapping_sub(1));
+
+        if self.b() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.c(), 1u8.wrapping_neg());
+
+        self.set_c(self.c().wrapping_sub(1));
+
+        if self.c() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.d(), 1u8.wrapping_neg());
+
+        self.set_d(self.d().wrapping_sub(1));
+
+        if self.d() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.e(), 1u8.wrapping_neg());
+
+        self.set_e(self.e().wrapping_sub(1));
+
+        if self.e() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.h(), 1u8.wrapping_neg());
+
+        self.set_h(self.h().wrapping_sub(1));
+
+        if self.h() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.l(), 1u8.wrapping_neg());
+
+        self.set_l(self.l().wrapping_sub(1));
+
+        if self.l() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.update_h_flag(self.a(), 1u8.wrapping_neg());
+
+        self.set_a(self.a().wrapping_sub(1));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn dec_hl(&mut self, operands: Vec<u8>) {
+        self.time += 3;
+        self.pc += 1;
+
+        self.update_h_flag(self.ram.load(self.hl()), 1u8.wrapping_neg());
+
+        self.ram.store(self.hl(), self.ram.load(self.hl()).wrapping_sub(1));
+
+        if self.ram.load(self.hl()) == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(true);
+    }
+
+    fn and_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.b());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.c());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.d());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.e());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.h());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.l());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.a());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_a(self.a() & self.ram.load(self.hl()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn and_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.set_a(self.a() & operands[0]);
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(true);
+        self.set_c_flag(false);
+    }
+
+    fn or_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.b());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.c());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.d());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.e());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.h());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.l());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.a());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_a(self.a() | self.ram.load(self.hl()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn or_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.set_a(self.a() | operands[0]);
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_b(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.b());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_c(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.c());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_d(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.d());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_e(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.e());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_h(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.h());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_l(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.l());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_a(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.a());
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_hl(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 1;
+
+        self.set_a(self.a() ^ self.ram.load(self.hl()));
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn xor_d8(&mut self, operands: Vec<u8>) {
+        self.time += 2;
+        self.pc += 2;
+
+        self.set_a(self.a() ^ operands[0]);
+
+        if self.a() == 0 {
+            self.set_z_flag(true);
+        } else {
+            self.set_z_flag(false);
+        }
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(false);
+    }
+
+    fn ccf(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        if self.c_flag() == 0 {
+            self.set_c_flag(true);
+        } else {
+            self.set_c_flag(false);
+        }
+    }
+
+    fn scf(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_n_flag(false);
+        self.set_h_flag(false);
+        self.set_c_flag(true);
+    }
+
+    fn cpl(&mut self, operands: Vec<u8>) {
+        self.time += 1;
+        self.pc += 1;
+
+        self.set_a(!self.a());
+
+        self.set_n_flag(true);
+        self.set_h_flag(true);
     }
 }
 
